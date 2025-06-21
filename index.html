@@ -154,6 +154,22 @@
             border: 2px solid #e9ecef;
         }
 
+        .app-image-real {
+            width: 300px;
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            margin: 0 auto 2rem;
+            display: block;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 3px solid #e9ecef;
+        }
+
+        .app-image-real:hover {
+            transform: scale(1.05);
+        }
+
         .app-image {
             width: 200px;
             height: 200px;
@@ -297,9 +313,7 @@
             <div id="apps" class="page">
                 <h1 class="app-title">App Usage Tracker</h1>
                 <div class="app-container">
-                    <div class="app-image">
-                        <img src="usage-icon.ico" alt="App Usage Icon">
-                    </div>
+                    <img src="usage-icon.ico" alt="App Usage Tracker Screenshot" class="app-image-real">
                     <button class="download-btn" onclick="downloadApp()">
                         Download Now
                     </button>
