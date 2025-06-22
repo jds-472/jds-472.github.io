@@ -412,7 +412,7 @@
                     <img src="resources/usage-icon.ico" alt="App Usage Tracker Screenshot" class="app-image-real">
                     
                     <div class="download-section">
-                        <a href="publish/setup.exe" class="download-btn" onclick="trackDownload('setup.exe')">
+                        <a href="publish/setup.exe" class="download-btn" onclick="trackDownload('setup.exe')" download>>
                             <svg class="download-icon" viewBox="0 0 24 24">
                                 <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
                             </svg>
@@ -505,14 +505,14 @@
 
         function checkFileAvailability() {
             // Check if setup.exe exists
-            fetch('setup.exe', { method: 'HEAD' })
+            fetch('publish/setup.exe', { method: 'HEAD' })
                 .then(response => {
                     if (!response.ok) {
-                        console.warn('File not found: setup.exe');
+                        console.warn('File not found: publish/setup.exe');
                     }
                 })
                 .catch(error => {
-                    console.warn('Could not check file: setup.exe', error);
+                    console.warn('Could not check file: publish/setup.exe', error);
                 });
         }
     </script>
