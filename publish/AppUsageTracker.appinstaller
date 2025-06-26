@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AppInstaller Uri="https://yourdomain.com/publish/AppUsageTracker.appinstaller" 
+<AppInstaller Uri="https://jds-472.github.io/publish/AppUsageTracker.appinstaller" 
               Version="1.0.2.0"
               xmlns="http://schemas.microsoft.com/appx/appinstaller/2017/2">
   
   <MainBundle Name="AppUsageTracker" 
-              Publisher="CN=YourPublisherName" 
+              Publisher="CN=jds" 
               Version="1.0.2.0" 
               Uri="https://jds-472.github.io/publish/AppUsageTracker.appxbundle" />
 

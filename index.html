@@ -5,399 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JDS-472 World</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            min-height: 100vh;
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
-        }
-
-        .banner {
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-            color: white;
-            text-align: center;
-            padding: 2rem;
-            font-size: 2.5rem;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .banner::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            animation: shine 3s infinite;
-        }
-
-        @keyframes shine {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        .nav-tabs {
-            display: flex;
-            background: #f8f9fa;
-            border-bottom: 3px solid #e9ecef;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .nav-tab {
-            flex: 1;
-            padding: 1rem 2rem;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #6c757d;
-            transition: all 0.3s ease;
-            position: relative;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .nav-tab:hover {
-            background: rgba(102, 126, 234, 0.1);
-            color: #667eea;
-            transform: translateY(-2px);
-        }
-
-        .nav-tab.active {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            box-shadow: inset 0 -3px 0 rgba(255, 255, 255, 0.3);
-        }
-
-        .nav-tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: -3px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-        }
-
-        .content {
-            padding: 3rem 2rem;
-            min-height: 60vh;
-        }
-
-        .page {
-            display: none;
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .home-content {
-            text-align: center;
-            padding: 4rem 0;
-        }
-
-        .home-content h2 {
-            font-size: 2.5rem;
-            color: #2c3e50;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .app-title {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #2c3e50;
-            text-align: center;
-            margin-bottom: 2rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .app-container {
-            max-width: 700px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            border: 2px solid #e9ecef;
-        }
-
-        .app-image-real {
-            width: 300px;
-            max-width: 100%;
-            height: auto;
-            border-radius: 15px;
-            margin: 0 auto 2rem;
-            display: block;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-            border: 3px solid #e9ecef;
-        }
-
-        .app-image-real:hover {
-            transform: scale(1.05);
-        }
-
-        .download-section {
-            margin-top: 2rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .download-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .download-btn {
-            background: linear-gradient(135deg, #28a745, #20c997);
-            color: white;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            min-width: 180px;
-            justify-content: center;
-        }
-
-        .download-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(40, 167, 69, 0.4);
-            background: linear-gradient(135deg, #218838, #1ea976);
-        }
-
-        .download-btn:active {
-            transform: translateY(0);
-        }
-
-        .download-btn.secondary {
-            background: linear-gradient(135deg, #6c757d, #495057);
-            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
-        }
-
-        .download-btn.secondary:hover {
-            background: linear-gradient(135deg, #5a6268, #3d4148);
-            box-shadow: 0 10px 25px rgba(108, 117, 125, 0.4);
-        }
-
-        .download-btn.msix {
-            background: linear-gradient(135deg, #007bff, #0056b3);
-            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
-        }
-
-        .download-btn.msix:hover {
-            background: linear-gradient(135deg, #0056b3, #004085);
-            box-shadow: 0 10px 25px rgba(0, 123, 255, 0.4);
-        }
-
-        .download-info {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin-top: 1rem;
-            border-left: 4px solid #667eea;
-        }
-
-        .download-info h4 {
-            color: #2c3e50;
-            margin-bottom: 0.5rem;
-        }
-
-        .download-info p {
-            color: #6c757d;
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .warning-box {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 10px;
-            padding: 1rem;
-            margin-top: 1rem;
-            color: #856404;
-        }
-
-        .warning-box h5 {
-            margin-bottom: 0.5rem;
-            color: #856404;
-        }
-
-        .installation-steps {
-            background: #e7f3ff;
-            border: 1px solid #b8daff;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin-top: 1rem;
-            text-align: left;
-        }
-
-        .installation-steps h5 {
-            color: #004085;
-            margin-bottom: 1rem;
-        }
-
-        .installation-steps ol {
-            color: #004085;
-            padding-left: 1.5rem;
-        }
-
-        .installation-steps li {
-            margin-bottom: 0.5rem;
-        }
-
-        .download-status {
-            margin-top: 1rem;
-            padding: 0.5rem;
-            border-radius: 5px;
-            font-weight: bold;
-            display: none;
-        }
-
-        .download-status.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .download-status.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .contact-section {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .contact-title {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #2c3e50;
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .contact-card {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            border: 2px solid #e9ecef;
-            text-align: center;
-        }
-
-        .github-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: linear-gradient(135deg, #24292e, #586069);
-            color: white;
-            text-decoration: none;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(36, 41, 46, 0.3);
-        }
-
-        .github-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(36, 41, 46, 0.4);
-            background: linear-gradient(135deg, #1b1f23, #4a5055);
-        }
-
-        .github-icon {
-            width: 24px;
-            height: 24px;
-            fill: currentColor;
-        }
-
-        .download-icon {
-            width: 18px;
-            height: 18px;
-            fill: currentColor;
-        }
-
-        @media (max-width: 768px) {
-            .banner {
-                font-size: 1.8rem;
-                padding: 1.5rem;
-            }
-            
-            .nav-tabs {
-                flex-direction: column;
-            }
-            
-            .content {
-                padding: 2rem 1rem;
-            }
-            
-            .app-title, .contact-title {
-                font-size: 2rem;
-            }
-            
-            .app-container {
-                padding: 1.5rem;
-            }
-
-            .download-options {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .download-btn {
-                min-width: 200px;
-            }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;line-height:1.6;color:#333;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh}
+        .container{max-width:1200px;margin:0 auto;background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);min-height:100vh;box-shadow:0 0 50px rgba(0,0,0,0.1)}
+        .banner{background:linear-gradient(135deg,#2c3e50 0%,#34495e 100%);color:white;text-align:center;padding:2rem;font-size:2.5rem;font-weight:bold;text-shadow:2px 2px 4px rgba(0,0,0,0.3);position:relative;overflow:hidden}
+        .banner::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent);animation:shine 3s infinite}
+        @keyframes shine{0%{left:-100%}100%{left:100%}}
+        .nav-tabs{display:flex;background:#f8f9fa;border-bottom:3px solid #e9ecef;box-shadow:0 2px 10px rgba(0,0,0,0.1)}
+        .nav-tab{flex:1;padding:1rem 2rem;background:none;border:none;cursor:pointer;font-size:1.1rem;font-weight:600;color:#6c757d;transition:all 0.3s ease;position:relative;text-transform:uppercase;letter-spacing:0.5px}
+        .nav-tab:hover{background:rgba(102,126,234,0.1);color:#667eea;transform:translateY(-2px)}
+        .nav-tab.active{background:linear-gradient(135deg,#667eea,#764ba2);color:white;box-shadow:inset 0 -3px 0 rgba(255,255,255,0.3)}
+        .nav-tab.active::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:3px;background:linear-gradient(90deg,#667eea,#764ba2)}
+        .content{padding:3rem 2rem;min-height:60vh}
+        .page{display:none;animation:fadeIn 0.5s ease-in}
+        .page.active{display:block}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        .home-content{text-align:center;padding:4rem 0}
+        .home-content h2{font-size:2.5rem;color:#2c3e50;margin-bottom:1rem;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .app-title{font-size:2.5rem;font-weight:bold;color:#2c3e50;text-align:center;margin-bottom:2rem;text-shadow:2px 2px 4px rgba(0,0,0,0.1)}
+        .app-container{max-width:700px;margin:0 auto;background:white;border-radius:20px;padding:2rem;box-shadow:0 10px 30px rgba(0,0,0,0.1);text-align:center;border:2px solid #e9ecef}
+        .app-image-real{width:300px;max-width:100%;height:auto;border-radius:15px;margin:0 auto 2rem;display:block;box-shadow:0 10px 25px rgba(0,0,0,0.2);transition:transform 0.3s ease;border:3px solid #e9ecef}
+        .app-image-real:hover{transform:scale(1.05)}
+        .download-section{margin-top:2rem;display:flex;flex-direction:column;gap:1rem;align-items:center}
+        .download-options{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-bottom:1.5rem}
+        .download-btn{background:linear-gradient(135deg,#28a745,#20c997);color:white;padding:1rem 2rem;border:none;border-radius:50px;font-size:1.1rem;font-weight:bold;cursor:pointer;transition:all 0.3s ease;text-transform:uppercase;letter-spacing:1px;box-shadow:0 5px 15px rgba(40,167,69,0.3);text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;min-width:180px;justify-content:center}
+        .download-btn:hover{transform:translateY(-3px);box-shadow:0 10px 25px rgba(40,167,69,0.4);background:linear-gradient(135deg,#218838,#1ea976)}
+        .download-btn:active{transform:translateY(0)}
+        .download-btn.secondary{background:linear-gradient(135deg,#6c757d,#495057);box-shadow:0 5px 15px rgba(108,117,125,0.3)}
+        .download-btn.secondary:hover{background:linear-gradient(135deg,#5a6268,#3d4148);box-shadow:0 10px 25px rgba(108,117,125,0.4)}
+        .download-btn.msix{background:linear-gradient(135deg,#007bff,#0056b3);box-shadow:0 5px 15px rgba(0,123,255,0.3)}
+        .download-btn.msix:hover{background:linear-gradient(135deg,#0056b3,#004085);box-shadow:0 10px 25px rgba(0,123,255,0.4)}
+        .download-info{background:#f8f9fa;border-radius:10px;padding:1.5rem;margin-top:1rem;border-left:4px solid #667eea}
+        .download-info h4{color:#2c3e50;margin-bottom:0.5rem}
+        .download-info p{color:#6c757d;font-size:0.9rem;margin-bottom:0.5rem}
+        .warning-box{background:#fff3cd;border:1px solid #ffeaa7;border-radius:10px;padding:1rem;margin-top:1rem;color:#856404}
+        .warning-box h5{margin-bottom:0.5rem;color:#856404}
+        .installation-steps{background:#e7f3ff;border:1px solid #b8daff;border-radius:10px;padding:1.5rem;margin-top:1rem;text-align:left}
+        .installation-steps h5{color:#004085;margin-bottom:1rem}
+        .installation-steps ol{color:#004085;padding-left:1.5rem}
+        .installation-steps li{margin-bottom:0.5rem}
+        .download-status{margin-top:1rem;padding:0.5rem;border-radius:5px;font-weight:bold;display:none}
+        .download-status.success{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+        .download-status.error{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+        .contact-section{max-width:800px;margin:0 auto}
+        .contact-title{font-size:2.5rem;font-weight:bold;color:#2c3e50;text-align:center;margin-bottom:2rem}
+        .contact-card{background:white;border-radius:15px;padding:2rem;box-shadow:0 10px 30px rgba(0,0,0,0.1);border:2px solid #e9ecef;text-align:center}
+        .github-link{display:inline-flex;align-items:center;gap:0.5rem;background:linear-gradient(135deg,#24292e,#586069);color:white;text-decoration:none;padding:1rem 2rem;border-radius:50px;font-weight:bold;font-size:1.1rem;transition:all 0.3s ease;box-shadow:0 5px 15px rgba(36,41,46,0.3)}
+        .github-link:hover{transform:translateY(-3px);box-shadow:0 10px 25px rgba(36,41,46,0.4);background:linear-gradient(135deg,#1b1f23,#4a5055)}
+        .github-icon{width:24px;height:24px;fill:currentColor}
+        .download-icon{width:18px;height:18px;fill:currentColor}
+        @media (max-width:768px){
+            .banner{font-size:1.8rem;padding:1.5rem}
+            .nav-tabs{flex-direction:column}
+            .content{padding:2rem 1rem}
+            .app-title,.contact-title{font-size:2rem}
+            .app-container{padding:1.5rem}
+            .download-options{flex-direction:column;align-items:center}
+            .download-btn{min-width:200px}
         }
     </style>
 </head>
