@@ -3,7 +3,7 @@
               Version="1.0.2.0"
               xmlns="http://schemas.microsoft.com/appx/appinstaller/2017/2">
   
-  <MainBundle Name="AppUsageTracker" 
+  <MainBundle Name="d25abe42-1554-40ff-a12b-b5f29248b006" 
               Publisher="CN=jds" 
               Version="1.0.2.0" 
               Uri="https://jds-472.github.io/publish/AppUsageTracker.appxbundle" />
