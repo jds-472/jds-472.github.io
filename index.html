@@ -170,26 +170,6 @@
             transform: scale(1.05);
         }
 
-        .app-image {
-            width: 200px;
-            height: 200px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 20px;
-            margin: 0 auto 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 3rem;
-            font-weight: bold;
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
-            transition: transform 0.3s ease;
-        }
-
-        .app-image:hover {
-            transform: scale(1.05) rotateY(5deg);
-        }
-
         .download-section {
             margin-top: 2rem;
             display: flex;
@@ -247,12 +227,12 @@
             box-shadow: 0 10px 25px rgba(108, 117, 125, 0.4);
         }
 
-        .download-btn.clickonce {
+        .download-btn.msix {
             background: linear-gradient(135deg, #007bff, #0056b3);
             box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
         }
 
-        .download-btn.clickonce:hover {
+        .download-btn.msix:hover {
             background: linear-gradient(135deg, #0056b3, #004085);
             box-shadow: 0 10px 25px rgba(0, 123, 255, 0.4);
         }
@@ -273,6 +253,43 @@
         .download-info p {
             color: #6c757d;
             font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+            color: #856404;
+        }
+
+        .warning-box h5 {
+            margin-bottom: 0.5rem;
+            color: #856404;
+        }
+
+        .installation-steps {
+            background: #e7f3ff;
+            border: 1px solid #b8daff;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            text-align: left;
+        }
+
+        .installation-steps h5 {
+            color: #004085;
+            margin-bottom: 1rem;
+        }
+
+        .installation-steps ol {
+            color: #004085;
+            padding-left: 1.5rem;
+        }
+
+        .installation-steps li {
             margin-bottom: 0.5rem;
         }
 
@@ -412,17 +429,42 @@
                     <img src="resources/usage-icon.ico" alt="App Usage Tracker Screenshot" class="app-image-real">
                     
                     <div class="download-section">
-                        <a href="publish/setup.exe" class="download-btn" onclick="trackDownload('setup.exe')" download>>
-                            <svg class="download-icon" viewBox="0 0 24 24">
-                                <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                            </svg>
-                            Download Now
-                        </a>
+                        <div class="download-options">
+                            <a href="publish/AppUsageTracker.appinstaller" class="download-btn msix" onclick="trackDownload('MSIX Installer')" title="Recommended - Modern Windows Installer">
+                                <svg class="download-icon" viewBox="0 0 24 24">
+                                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                                </svg>
+                                Install App (MSIX)
+                            </a>
+                            
+                            <a href="publish/AppUsageTracker.appxbundle" class="download-btn secondary" onclick="trackDownload('Direct Bundle')" title="Direct download of app bundle" download>
+                                <svg class="download-icon" viewBox="0 0 24 24">
+                                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                                </svg>
+                                Download Bundle
+                            </a>
+                        </div>
                         
                         <div class="download-info">
-                            <h4>Easy Installation:</h4>
-                            <p>Click the download button to get the installer. It will automatically check for and install .NET Framework if needed, then install the App Usage Tracker.</p>
-                            <p><strong>System Requirements:</strong> Windows 7 or later</p>
+                            <h4>🚀 Easy Installation (Recommended):</h4>
+                            <p>Click "Install App (MSIX)" for the easiest installation experience. This will automatically handle updates and dependencies.</p>
+                            <p><strong>System Requirements:</strong> Windows 10 version 1709 or later</p>
+                        </div>
+
+                        <div class="warning-box">
+                            <h5>⚠️ Certificate Trust Required</h5>
+                            <p>This app uses a self-signed certificate. You may need to trust the certificate during installation. Windows will prompt you if this is required.</p>
+                        </div>
+
+                        <div class="installation-steps">
+                            <h5>📋 Installation Steps:</h5>
+                            <ol>
+                                <li>Click "Install App (MSIX)" button above</li>
+                                <li>If prompted, click "Install" in the App Installer dialog</li>
+                                <li>If you see a certificate warning, click "Install anyway" or "Install" to proceed</li>
+                                <li>The app will be installed and available in your Start Menu</li>
+                                <li>Future updates will be handled automatically</li>
+                            </ol>
                         </div>
                         
                         <div id="downloadStatus" class="download-status"></div>
@@ -462,16 +504,16 @@
             event.target.classList.add('active');
         }
 
-        function trackDownload(fileName) {
-            showDownloadStatus(`Starting download of ${fileName}...`, 'success');
+        function trackDownload(downloadType) {
+            showDownloadStatus(`Starting ${downloadType} download...`, 'success');
             
             // Optional: Add analytics tracking here
-            console.log(`Download initiated: ${fileName}`);
+            console.log(`Download initiated: ${downloadType}`);
             
-            // Clear status after 3 seconds
+            // Clear status after 5 seconds
             setTimeout(() => {
                 hideDownloadStatus();
-            }, 3000);
+            }, 5000);
         }
 
         function showDownloadStatus(message, type) {
@@ -504,16 +546,22 @@
         });
 
         function checkFileAvailability() {
-            // Check if setup.exe exists
-            fetch('publish/setup.exe', { method: 'HEAD' })
+            // Check if appinstaller file exists
+            fetch('publish/AppUsageTracker.appinstaller', { method: 'HEAD' })
                 .then(response => {
                     if (!response.ok) {
-                        console.warn('File not found: publish/setup.exe');
+                        console.warn('File not found: publish/AppUsageTracker.appinstaller');
+                        showFileNotFoundWarning();
                     }
                 })
                 .catch(error => {
-                    console.warn('Could not check file: publish/setup.exe', error);
+                    console.warn('Could not check file: publish/AppUsageTracker.appinstaller', error);
+                    showFileNotFoundWarning();
                 });
+        }
+
+        function showFileNotFoundWarning() {
+            showDownloadStatus('Installation files are being prepared. Please try again shortly.', 'error');
         }
     </script>
 </body>
