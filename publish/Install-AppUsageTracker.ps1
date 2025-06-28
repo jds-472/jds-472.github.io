@@ -1,127 +1,138 @@
-# Install-AppUsageTracker.ps1
-# PowerShell script to install certificate and then the app
+# App Usage Tracker - One-Click Installer
+# This script installs the certificate and then launches the app installer
 
 param(
-    [switch]$Force,
-    [switch]$Silent
+    [switch]$Silent = $false
 )
 
-Write-Host "App Usage Tracker Installation Script" -ForegroundColor Green
-Write-Host "=====================================" -ForegroundColor Green
+$ErrorActionPreference = "Stop"
+$ProgressPreference = "SilentlyContinue"
 
-# Function to test if script is running as administrator
-function Test-Administrator {
-    $currentUser = [Security.Principal.WindowsIdentity]::GetCurrent()
-    $principal = New-Object Security.Principal.WindowsPrincipal($currentUser)
-    return $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
-}
+# Configuration
+$BaseUrl = "https://jds-472.github.io/publish"
+$CertificateUrl = "$BaseUrl/AppUsageTracker.cer"
+$AppInstallerUrl = "$BaseUrl/AppUsageTracker.appinstaller"
+$TempDir = [System.IO.Path]::GetTempPath()
+$CertPath = Join-Path $TempDir "AppUsageTracker.cer"
 
-# Function to restart script as administrator
-function Start-AsAdministrator {
-    $scriptPath = $MyInvocation.MyCommand.Path
-    $arguments = "-ExecutionPolicy Bypass -File `"$scriptPath`""
-    if ($Force) { $arguments += " -Force" }
-    if ($Silent) { $arguments += " -Silent" }
-    
-    Start-Process PowerShell -Verb RunAs -ArgumentList $arguments
-    exit
-}
-
-# Check if running as administrator
-if (-not (Test-Administrator)) {
-    Write-Warning "Administrator privileges required for certificate installation."
-    
-    if ($Silent) {
-        Write-Host "Attempting to restart as Administrator..." -ForegroundColor Yellow
-        Start-AsAdministrator
-    } else {
-        $restart = Read-Host "Restart as Administrator? (Y/n)"
-        if ($restart -ne "n" -and $restart -ne "N") {
-            Start-AsAdministrator
-        } else {
-            Write-Host "Continuing with limited privileges..." -ForegroundColor Yellow
-        }
+function Write-Status {
+    param([string]$Message, [string]$Color = "Green")
+    if (-not $Silent) {
+        Write-Host $Message -ForegroundColor $Color
     }
 }
 
+function Test-AdminRights {
+    return ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")
+}
+
+function Install-Certificate {
+    param([string]$CertificatePath)
+    
+    try {
+        # Import to Trusted Root Certification Authorities
+        $cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($CertificatePath)
+        $store = New-Object System.Security.Cryptography.X509Certificates.X509Store("Root", "LocalMachine")
+        $store.Open([System.Security.Cryptography.X509Certificates.OpenFlags]::ReadWrite)
+        $store.Add($cert)
+        $store.Close()
+        
+        Write-Status "✓ Certificate installed successfully" "Green"
+        return $true
+    }
+    catch {
+        Write-Status "✗ Failed to install certificate: $($_.Exception.Message)" "Red"
+        return $false
+    }
+}
+
+function Start-AppInstaller {
+    param([string]$AppInstallerUrl)
+    
+    try {
+        Write-Status "Launching App Installer..." "Yellow"
+        Start-Process "ms-appinstaller:?source=$AppInstallerUrl"
+        Write-Status "✓ App Installer launched successfully" "Green"
+        return $true
+    }
+    catch {
+        Write-Status "✗ Failed to launch App Installer: $($_.Exception.Message)" "Red"
+        return $false
+    }
+}
+
+# Main installation process
 try {
-    # Configuration
-    $baseUrl = "https://jds-472.github.io/publish"
-    $certUrl = "$baseUrl/AppUsageTracker.cer"
-    $appInstallerUrl = "$baseUrl/AppUsageTracker.appinstaller"
+    Write-Status "Starting App Usage Tracker installation..." "Cyan"
+    Write-Status "=======================================" "Cyan"
     
-    # Temporary paths
-    $tempDir = $env:TEMP
-    $certPath = Join-Path $tempDir "AppUsageTracker.cer"
-    
-    Write-Host "Step 1: Downloading certificate..." -ForegroundColor Cyan
-    
-    # Download with progress
-    $webClient = New-Object System.Net.WebClient
-    $webClient.DownloadFile($certUrl, $certPath)
-    Write-Host "✓ Certificate downloaded to: $certPath" -ForegroundColor Green
-    
-    Write-Host "Step 2: Installing certificate..." -ForegroundColor Cyan
-    
-    # Try to install to LocalMachine first, fallback to CurrentUser
-    $certInstalled = $false
-    
-    if (Test-Administrator) {
-        try {
-            $cert = Import-Certificate -FilePath $certPath -CertStoreLocation Cert:\LocalMachine\Root -ErrorAction Stop
-            Write-Host "✓ Certificate installed to LocalMachine\Root" -ForegroundColor Green
-            $certInstalled = $true
-        }
-        catch {
-            Write-Warning "Failed to install to LocalMachine: $($_.Exception.Message)"
-        }
+    # Check if running as administrator
+    if (-not (Test-AdminRights)) {
+        Write-Status "Administrator privileges required for certificate installation." "Yellow"
+        Write-Status "Attempting to restart as administrator..." "Yellow"
+        
+        $arguments = "-NoProfile -ExecutionPolicy Bypass -File `"$($MyInvocation.MyCommand.Definition)`""
+        if ($Silent) { $arguments += " -Silent" }
+        
+        Start-Process PowerShell -Verb RunAs -ArgumentList $arguments -Wait
+        exit 0
     }
     
-    if (-not $certInstalled) {
-        try {
-            $cert = Import-Certificate -FilePath $certPath -CertStoreLocation Cert:\CurrentUser\Root -ErrorAction Stop
-            Write-Host "✓ Certificate installed to CurrentUser\Root" -ForegroundColor Green
-            $certInstalled = $true
+    Write-Status "Running with administrator privileges ✓" "Green"
+    
+    # Download certificate
+    Write-Status "Downloading certificate..." "Yellow"
+    try {
+        Invoke-WebRequest -Uri $CertificateUrl -OutFile $CertPath -UseBasicParsing
+        Write-Status "✓ Certificate downloaded" "Green"
+    }
+    catch {
+        Write-Status "✗ Failed to download certificate: $($_.Exception.Message)" "Red"
+        if (-not $Silent) {
+            Read-Host "Press Enter to exit"
         }
-        catch {
-            Write-Error "Failed to install certificate: $($_.Exception.Message)"
-            throw
+        exit 1
+    }
+    
+    # Install certificate
+    Write-Status "Installing certificate..." "Yellow"
+    if (-not (Install-Certificate -CertificatePath $CertPath)) {
+        if (-not $Silent) {
+            Read-Host "Press Enter to exit"
         }
+        exit 1
     }
     
-    Write-Host "Step 3: Launching application installer..." -ForegroundColor Cyan
-    
-    # Launch AppInstaller
-    $process = Start-Process -FilePath "ms-appinstaller:?source=$appInstallerUrl" -PassThru
-    
-    if ($process) {
-        Write-Host "✓ App Installer launched successfully" -ForegroundColor Green
-        Write-Host "Please follow the App Installer prompts to complete installation." -ForegroundColor Cyan
-    } else {
-        Write-Warning "Could not launch App Installer. Opening fallback URL..."
-        Start-Process $appInstallerUrl
+    # Clean up certificate file
+    try {
+        Remove-Item $CertPath -Force
+    }
+    catch {
+        # Ignore cleanup errors
     }
     
-    # Cleanup
-    if (Test-Path $certPath) {
-        Remove-Item $certPath -Force -ErrorAction SilentlyContinue
-        Write-Host "✓ Temporary files cleaned up" -ForegroundColor Green
+    # Launch App Installer
+    Write-Status "Starting application installation..." "Yellow"
+    if (Start-AppInstaller -AppInstallerUrl $AppInstallerUrl) {
+        Write-Status "=======================================" "Cyan"
+        Write-Status "Installation process completed!" "Cyan"
+        Write-Status "The App Installer should now be open." "Green"
+        Write-Status "Follow the prompts to complete the installation." "Green"
+    }
+    else {
+        Write-Status "Manual installation required:" "Yellow"
+        Write-Status "Please visit: $AppInstallerUrl" "Yellow"
     }
     
-    Write-Host "`n🎉 Installation process completed!" -ForegroundColor Green
-    Write-Host "After App Installer finishes, you'll find 'App Usage Tracker' in your Start Menu." -ForegroundColor Cyan
-    
-} catch {
-    Write-Error "❌ Installation failed: $($_.Exception.Message)"
-    Write-Host "`nTroubleshooting:" -ForegroundColor Yellow
-    Write-Host "1. Make sure you have an internet connection" -ForegroundColor Yellow
-    Write-Host "2. Try running as Administrator" -ForegroundColor Yellow
-    Write-Host "3. Check Windows version (requires Windows 10 1709+)" -ForegroundColor Yellow
-    Write-Host "4. Try manual installation from the website" -ForegroundColor Yellow
-    exit 1
+    if (-not $Silent) {
+        Write-Status ""
+        Read-Host "Press Enter to exit"
+    }
 }
-
-if (-not $Silent) {
-    Write-Host "`nPress any key to exit..." -ForegroundColor Gray
-    $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+catch {
+    Write-Status "✗ Installation failed: $($_.Exception.Message)" "Red"
+    if (-not $Silent) {
+        Read-Host "Press Enter to exit"
+    }
+    exit 1
 }
