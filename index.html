@@ -94,11 +94,11 @@
         
         <div class="download-section">
             <div class="download-options">
-                <a href="publish/Install-AppUsageTracker.ps1" class="download-btn" onclick="trackDownload('PowerShell Installer')" title="Automated installation with certificate (Recommended)" download>
+                <a href="publish/Install-AppUsageTracker.bat" class="download-btn" onclick="trackDownload('Batch Installer')" title="One-click installation (Recommended)" download>
                     <svg class="download-icon" viewBox="0 0 24 24">
                         <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
                     </svg>
-                    Easy Install (PowerShell)
+                    One-Click Install (.bat)
                 </a>
                 
                 <a href="publish/AppUsageTracker.cer" class="download-btn secondary" onclick="trackDownload('Certificate')" title="Download certificate file" download>
@@ -118,24 +118,24 @@
             
             <div class="download-info">
                 <h4>🚀 Installation Methods:</h4>
-                <p><strong>Option 1 - PowerShell Script (Recommended):</strong> One-click installation that handles everything automatically.</p>
+                <p><strong>Option 1 - Batch File (Recommended):</strong> Simple double-click installation that handles everything automatically.</p>
                 <p><strong>Option 2 - Manual:</strong> Download certificate first, install it, then use the MSIX installer.</p>
                 <p><strong>System Requirements:</strong> Windows 10 version 1709 or later</p>
             </div>
 
-            <!-- PowerShell Installation Instructions -->
+            <!-- Batch Installation Instructions -->
             <div class="installation-steps" style="background:#e8f5e8; border-color:#28a745;">
-                <h5 style="color:#155724;">🔧 PowerShell Installation (Easiest):</h5>
+                <h5 style="color:#155724;">🔧 Batch File Installation (Easiest):</h5>
                 <ol style="color:#155724;">
-                    <li>Click "Easy Install (PowerShell)" to download the script</li>
-                    <li>Right-click the downloaded file and select "Run with PowerShell"</li>
-                    <li>If prompted, click "Yes" to allow Administrator privileges</li>
-                    <li>The script will automatically download and install the certificate, then launch the app installer</li>
-                    <li>Follow the App Installer prompts to complete installation</li>
+                    <li>Click "One-Click Install (.bat)" to download the installer</li>
+                    <li>Double-click the downloaded .bat file to run it</li>
+                    <li>If Windows shows a security warning, click "More info" then "Run anyway"</li>
+                    <li>Right-click and select "Run as administrator" for best results</li>
+                    <li>The script will automatically download and install the certificate</li>
+                    <li>Windows App Installer will open automatically - follow the prompts</li>
                 </ol>
                 <p style="color:#155724; font-size:0.9rem; margin-top:1rem;">
-                    <strong>Note:</strong> If you get an execution policy error, open PowerShell as Administrator and run: 
-                    <code style="background:#fff; padding:2px 4px; border-radius:3px;">Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser</code>
+                    <strong>Note:</strong> The batch file uses standard Windows commands and is much simpler than PowerShell - no execution policy issues!
                 </p>
             </div>
 
@@ -153,20 +153,22 @@
                 </ol>
             </div>
             
-            <!-- Alternative command line instructions -->
-            <div class="installation-steps" style="background:#f8f9fa; border-color:#6c757d;">
-                <h5 style="color:#495057;">💻 Alternative: Command Line Installation</h5>
-                <p style="color:#6c757d; font-size:0.9rem;">If you prefer command line, download the script and run:</p>
-                <code style="display:block; background:#2d3748; color:#e2e8f0; padding:1rem; border-radius:5px; margin:0.5rem 0; font-family:'Courier New', monospace;">
-PowerShell -ExecutionPolicy Bypass -File ".\Install-AppUsageTracker.ps1"
-                </code>
-                <p style="color:#6c757d; font-size:0.9rem;">For silent installation: add <code>-Silent</code> parameter</p>
+            <!-- Troubleshooting section -->
+            <div class="installation-steps" style="background:#fff3cd; border-color:#ffc107;">
+                <h5 style="color:#856404;">🔧 Troubleshooting</h5>
+                <p style="color:#856404; font-size:0.9rem;"><strong>If the batch file doesn't work:</strong></p>
+                <ul style="color:#856404; font-size:0.9rem; margin-left:1rem;">
+                    <li>Make sure you're running as administrator</li>
+                    <li>Check your antivirus isn't blocking the download</li>
+                    <li>Try the manual installation method instead</li>
+                    <li>Ensure you have an internet connection</li>
+                </ul>
             </div>
             
             <div class="warning-box">
                 <h5>⚠️ Security Notice</h5>
-                <p>This app uses a self-signed certificate. The PowerShell script requires Administrator privileges to install the certificate system-wide for the best experience.</p>
-                <p><strong>Trust:</strong> Only install if you trust this source. You can inspect the PowerShell script before running it.</p>
+                <p>This app uses a self-signed certificate. The batch file will attempt to install the certificate system-wide for the best experience.</p>
+                <p><strong>Trust:</strong> Only install if you trust this source. You can inspect the batch file in a text editor before running it.</p>
             </div>
             
             <div id="downloadStatus" class="download-status"></div>
