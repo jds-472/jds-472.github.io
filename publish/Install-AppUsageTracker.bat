@@ -1,17 +1,8 @@
 @echo off
 setlocal EnableDelayedExpansion
 
-:: Check for admin privileges
-net session >nul 2>&1
-if %errorLevel% == 0 (
-    echo Running with administrator privileges...
-) else (
-    echo This installer requires administrator privileges to install the certificate.
-    echo Please run as administrator or the installation may fail.
-    echo.
-    pause
-    echo Continuing anyway...
-)
+:: No admin privileges required - installing for current user only
+echo Installing for current user (no admin privileges required)...
 
 echo ========================================
 echo App Usage Tracker Installer
@@ -36,20 +27,15 @@ if %errorLevel% neq 0 (
     exit /b 1
 )
 
-echo Step 2: Installing certificate...
-certutil -addstore -enterprise -f "Root" "%CERT_FILE%" >nul 2>&1
+echo Step 2: Installing certificate for current user...
+certutil -addstore -user -f "Root" "%CERT_FILE%" >nul 2>&1
 if %errorLevel% == 0 (
-    echo Certificate installed successfully to Trusted Root Certification Authorities
+    echo Certificate installed successfully to user's Trusted Root Certification Authorities
 ) else (
-    echo Warning: Failed to install certificate to machine store, trying user store...
-    certutil -addstore -user -f "Root" "%CERT_FILE%" >nul 2>&1
-    if %errorLevel% == 0 (
-        echo Certificate installed to user store
-    ) else (
-        echo Failed to install certificate! You may need to install it manually.
-        echo Certificate location: %CERT_FILE%
-        pause
-    )
+    echo Failed to install certificate to user store!
+    echo You may need to install it manually by double-clicking: %CERT_FILE%
+    echo Then select "Install Certificate" > "Current User" > "Trusted Root Certification Authorities"
+    pause
 )
 
 echo Step 3: Downloading app installer...
