@@ -87,185 +87,98 @@
                 </div>
             </div>
             
-<div id="apps" class="page">
-    <h1 class="app-title">App Usage Tracker</h1>
-    <div class="app-container">
-        <img src="resources/usage-icon.ico" alt="App Usage Tracker Screenshot" class="app-image-real">
-        
-        <div class="download-section">
-            <div class="download-options">
-                <a href="publish/Install-AppUsageTracker.bat" class="download-btn" onclick="trackDownload('Batch Installer')" title="One-click installation (Recommended)" download>
-                    <svg class="download-icon" viewBox="0 0 24 24">
-                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                    </svg>
-                    One-Click Install (.bat)
-                </a>
-                
-                <a href="publish/AppUsageTracker.cer" class="download-btn secondary" onclick="trackDownload('Certificate')" title="Download certificate file" download>
-                    <svg class="download-icon" viewBox="0 0 24 24">
-                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                    Download Certificate
-                </a>
-                
-                <a href="publish/AppUsageTracker.appinstaller" class="download-btn msix" onclick="trackDownload('MSIX Installer')" title="Manual installation after certificate">
-                    <svg class="download-icon" viewBox="0 0 24 24">
-                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                    </svg>
-                    Install App (MSIX)
-                </a>
-            </div>
-            
-            <div class="download-info">
-                <h4>🚀 Installation Methods:</h4>
-                <p><strong>Option 1 - Batch File (Recommended):</strong> Simple double-click installation - no admin privileges needed!</p>
-                <p><strong>Option 2 - Manual:</strong> Download certificate first, install it, then use the MSIX installer.</p>
-                <p><strong>System Requirements:</strong> Windows 10 version 1709 or later</p>
-            </div>
+            <div id="apps" class="page">
+                <h1 class="app-title">App Usage Tracker</h1>
+                <div class="app-container">
+                    <img src="resources/usage-icon.ico" alt="App Usage Tracker Screenshot" class="app-image-real">
+                    
+                    <div class="download-section">
+                        <div class="download-options">
+                            <a href="publish/Install-AppUsageTracker.bat" class="download-btn" onclick="trackDownload('Batch Installer')" title="One-click installation (Recommended)" download>
+                                <svg class="download-icon" viewBox="0 0 24 24">
+                                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                                </svg>
+                                One-Click Install (.bat)
+                            </a>
+                            
+                            <a href="publish/AppUsageTracker.cer" class="download-btn secondary" onclick="trackDownload('Certificate')" title="Download certificate file" download>
+                                <svg class="download-icon" viewBox="0 0 24 24">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Download Certificate
+                            </a>
+                            
+                            <a href="publish/AppUsageTracker.appinstaller" class="download-btn msix" onclick="trackDownload('MSIX Installer')" title="Manual installation after certificate">
+                                <svg class="download-icon" viewBox="0 0 24 24">
+                                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                                </svg>
+                                Install App (MSIX)
+                            </a>
+                        </div>
+                        
+                        <div class="download-info">
+                            <h4>🚀 Installation Methods:</h4>
+                            <p><strong>Option 1 - Batch File (Recommended):</strong> Simple double-click installation - no admin privileges needed!</p>
+                            <p><strong>Option 2 - Manual:</strong> Download certificate first, install it, then use the MSIX installer.</p>
+                            <p><strong>System Requirements:</strong> Windows 10 version 1709 or later</p>
+                        </div>
 
-            <!-- Batch Installation Instructions -->
-            <div class="installation-steps" style="background:#e8f5e8; border-color:#28a745;">
-                <h5 style="color:#155724;">🔧 Batch File Installation (Easiest - No Admin Required!):</h5>
-                <ol style="color:#155724;">
-                    <li>Click "One-Click Install (.bat)" to download the installer</li>
-                    <li>Double-click the downloaded .bat file to run it</li>
-                    <li>If Windows shows a security warning, click "More info" then "Run anyway"</li>
-                    <li>The script will automatically download and install the certificate for your user account</li>
-                    <li>Windows App Installer will open automatically - follow the prompts</li>
-                    <li>The app will be installed for your user account only</li>
-                </ol>
-                <p style="color:#155724; font-size:0.9rem; margin-top:1rem;">
-                    <strong>Benefits:</strong> No admin privileges required, no UAC prompts, works immediately after installation!
-                </p>
-            </div>
+                        <!-- Batch Installation Instructions -->
+                        <div class="installation-steps" style="background:#e8f5e8; border-color:#28a745;">
+                            <h5 style="color:#155724;">🔧 Batch File Installation (Easiest - No Admin Required!):</h5>
+                            <ol style="color:#155724;">
+                                <li>Click "One-Click Install (.bat)" to download the installer</li>
+                                <li>Double-click the downloaded .bat file to run it</li>
+                                <li>If Windows shows a security warning, click "More info" then "Run anyway"</li>
+                                <li>The script will automatically download and install the certificate for your user account</li>
+                                <li>Windows App Installer will open automatically - follow the prompts</li>
+                                <li>The app will be installed for your user account only</li>
+                            </ol>
+                            <p style="color:#155724; font-size:0.9rem; margin-top:1rem;">
+                                <strong>Benefits:</strong> No admin privileges required, no UAC prompts, works immediately after installation!
+                            </p>
+                        </div>
 
-            <!-- Manual Installation Instructions -->
-            <div class="installation-steps">
-                <h5>📋 Manual Installation Steps:</h5>
-                <ol>
-                    <li>Download the certificate file using the "Download Certificate" button</li>
-                    <li>Right-click the certificate file and select "Install Certificate"</li>
-                    <li>Choose "Current User" → "Place all certificates in the following store"</li>
-                    <li>Click "Browse" and select "Trusted Root Certification Authorities"</li>
-                    <li>Click "OK" and "Finish" to install the certificate</li>
-                    <li>Now click "Install App (MSIX)" to install the application</li>
-                    <li>Follow the App Installer prompts</li>
-                </ol>
-                <p style="color:#6c757d; font-size:0.9rem; margin-top:0.5rem;">
-                    <strong>Note:</strong> Manual installation also doesn't require admin privileges when installing for current user.
-                </p>
+                        <!-- Manual Installation Instructions -->
+                        <div class="installation-steps">
+                            <h5>📋 Manual Installation Steps:</h5>
+                            <ol>
+                                <li>Download the certificate file using the "Download Certificate" button</li>
+                                <li>Right-click the certificate file and select "Install Certificate"</li>
+                                <li>Choose "Current User" → "Place all certificates in the following store"</li>
+                                <li>Click "Browse" and select "Trusted Root Certification Authorities"</li>
+                                <li>Click "OK" and "Finish" to install the certificate</li>
+                                <li>Now click "Install App (MSIX)" to install the application</li>
+                                <li>Follow the App Installer prompts</li>
+                            </ol>
+                            <p style="color:#6c757d; font-size:0.9rem; margin-top:0.5rem;">
+                                <strong>Note:</strong> Manual installation also doesn't require admin privileges when installing for current user.
+                            </p>
+                        </div>
+                        
+                        <!-- Troubleshooting section -->
+                        <div class="installation-steps" style="background:#fff3cd; border-color:#ffc107;">
+                            <h5 style="color:#856404;">🔧 Troubleshooting</h5>
+                            <p style="color:#856404; font-size:0.9rem;"><strong>If the batch file doesn't work:</strong></p>
+                            <ul style="color:#856404; font-size:0.9rem; margin-left:1rem;">
+                                <li>Check your antivirus isn't blocking the download</li>
+                                <li>Try the manual installation method instead</li>
+                                <li>Ensure you have an internet connection</li>
+                                <li>Make sure you have permission to write to your user certificate store</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="warning-box">
+                            <h5>⚠️ Security Notice</h5>
+                            <p>This app uses a self-signed certificate. The installer will add the certificate to your user account's trusted certificates only.</p>
+                            <p><strong>Trust:</strong> Only install if you trust this source. You can inspect the batch file in a text editor before running it.</p>
+                            <p><strong>User Installation:</strong> No admin privileges required - installs only for your user account.</p>
+                        </div>
+                        
+                        <div id="downloadStatus" class="download-status"></div>
+                    </div>
+                </div>
             </div>
-            
-            <!-- Troubleshooting section -->
-            <div class="installation-steps" style="background:#fff3cd; border-color:#ffc107;">
-                <h5 style="color:#856404;">🔧 Troubleshooting</h5>
-                <p style="color:#856404; font-size:0.9rem;"><strong>If the batch file doesn't work:</strong></p>
-                <ul style="color:#856404; font-size:0.9rem; margin-left:1rem;">
-                    <li>Check your antivirus isn't blocking the download</li>
-                    <li>Try the manual installation method instead</li>
-                    <li>Ensure you have an internet connection</li>
-                    <li>Make sure you have permission to write to your user certificate store</li>
-                </ul>
-            </div>
-            
-            <div class="warning-box">
-                <h5>⚠️ Security Notice</h5>
-                <p>This app uses a self-signed certificate. The installer will add the certificate to your user account's trusted certificates only.</p>
-                <p><strong>Trust:</strong> Only install if you trust this source. You can inspect the batch file in a text editor before running it.</p>
-                <p><strong>User Installation:</strong> No admin privileges required - installs only for your user account.</p>
-            </div>
-            
-            <div id="downloadStatus" class="download-status"></div>
-        </div>
-    </div>
-</div>
-    <h1 class="app-title">App Usage Tracker</h1>
-    <div class="app-container">
-        <img src="resources/usage-icon.ico" alt="App Usage Tracker Screenshot" class="app-image-real">
-        
-        <div class="download-section">
-            <div class="download-options">
-                <a href="publish/Install-AppUsageTracker.bat" class="download-btn" onclick="trackDownload('Batch Installer')" title="One-click installation (Recommended)" download>
-                    <svg class="download-icon" viewBox="0 0 24 24">
-                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                    </svg>
-                    One-Click Install (.bat)
-                </a>
-                
-                <a href="publish/AppUsageTracker.cer" class="download-btn secondary" onclick="trackDownload('Certificate')" title="Download certificate file" download>
-                    <svg class="download-icon" viewBox="0 0 24 24">
-                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                    Download Certificate
-                </a>
-                
-                <a href="publish/AppUsageTracker.appinstaller" class="download-btn msix" onclick="trackDownload('MSIX Installer')" title="Manual installation after certificate">
-                    <svg class="download-icon" viewBox="0 0 24 24">
-                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                    </svg>
-                    Install App (MSIX)
-                </a>
-            </div>
-            
-            <div class="download-info">
-                <h4>🚀 Installation Methods:</h4>
-                <p><strong>Option 1 - Batch File (Recommended):</strong> Simple double-click installation that handles everything automatically.</p>
-                <p><strong>Option 2 - Manual:</strong> Download certificate first, install it, then use the MSIX installer.</p>
-                <p><strong>System Requirements:</strong> Windows 10 version 1709 or later</p>
-            </div>
-
-            <!-- Batch Installation Instructions -->
-            <div class="installation-steps" style="background:#e8f5e8; border-color:#28a745;">
-                <h5 style="color:#155724;">🔧 Batch File Installation (Easiest):</h5>
-                <ol style="color:#155724;">
-                    <li>Click "One-Click Install (.bat)" to download the installer</li>
-                    <li>Double-click the downloaded .bat file to run it</li>
-                    <li>If Windows shows a security warning, click "More info" then "Run anyway"</li>
-                    <li>Right-click and select "Run as administrator" for best results</li>
-                    <li>The script will automatically download and install the certificate</li>
-                    <li>Windows App Installer will open automatically - follow the prompts</li>
-                </ol>
-                <p style="color:#155724; font-size:0.9rem; margin-top:1rem;">
-                    <strong>Note:</strong> The batch file uses standard Windows commands and is much simpler than PowerShell - no execution policy issues!
-                </p>
-            </div>
-
-            <!-- Manual Installation Instructions -->
-            <div class="installation-steps">
-                <h5>📋 Manual Installation Steps:</h5>
-                <ol>
-                    <li>Download the certificate file using the "Download Certificate" button</li>
-                    <li>Right-click the certificate file and select "Install Certificate"</li>
-                    <li>Choose "Local Machine" → "Place all certificates in the following store"</li>
-                    <li>Click "Browse" and select "Trusted Root Certification Authorities"</li>
-                    <li>Click "OK" and "Finish" to install the certificate</li>
-                    <li>Now click "Install App (MSIX)" to install the application</li>
-                    <li>Follow the App Installer prompts</li>
-                </ol>
-            </div>
-            
-            <!-- Troubleshooting section -->
-            <div class="installation-steps" style="background:#fff3cd; border-color:#ffc107;">
-                <h5 style="color:#856404;">🔧 Troubleshooting</h5>
-                <p style="color:#856404; font-size:0.9rem;"><strong>If the batch file doesn't work:</strong></p>
-                <ul style="color:#856404; font-size:0.9rem; margin-left:1rem;">
-                    <li>Make sure you're running as administrator</li>
-                    <li>Check your antivirus isn't blocking the download</li>
-                    <li>Try the manual installation method instead</li>
-                    <li>Ensure you have an internet connection</li>
-                </ul>
-            </div>
-            
-            <div class="warning-box">
-                <h5>⚠️ Security Notice</h5>
-                <p>This app uses a self-signed certificate. The batch file will attempt to install the certificate system-wide for the best experience.</p>
-                <p><strong>Trust:</strong> Only install if you trust this source. You can inspect the batch file in a text editor before running it.</p>
-            </div>
-            
-            <div id="downloadStatus" class="download-status"></div>
-        </div>
-    </div>
-</div>
             
             <div id="contact" class="page">
                 <h1 class="contact-title">Contact Me</h1>
